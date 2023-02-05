@@ -68,6 +68,13 @@ struct SecondView: View {
                             }
                         }
                     }
+                    .onDelete { indexSet in
+                        guard let index = indexSet.changeInt() else {
+                            return
+                        }
+                        
+                        viewModel.delete(index: index)
+                    }
                 }
                 .onAppear {
                     viewModel.setSchedules()

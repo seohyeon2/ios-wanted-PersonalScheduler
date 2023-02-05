@@ -12,9 +12,8 @@ import FBSDKLoginKit
 
 class ViewModel: ObservableObject {
     @Published var isLoggedIn = false
-    @Published var schedule = Dummy()
     @Published var schedules = [Schedule]()
-    
+
     func setSchedules() {
         schedules = [Schedule]()
         FirebaseManager.shared.fetch { data in
@@ -35,6 +34,11 @@ class ViewModel: ObservableObject {
         FirebaseManager.shared.save(schedule)
     }
     
+    func delete(index: Int) {
+        let id = schedules.remove(at: index).id
+        FirebaseManager.shared.delete(id: id)
+    }
+
     func hasLoggedInHistory() -> Bool {
         if UserDefaults.standard.object(forKey: "userID") != nil {
             return true
@@ -60,7 +64,7 @@ class ViewModel: ObservableObject {
                 return
             }
 
-            self.setUserDefaults(token.tokenString)
+            self.setUserDefaults(token.userID)
             self.isLoggedIn = true
         }
     }

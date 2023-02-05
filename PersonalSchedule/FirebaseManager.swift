@@ -51,12 +51,12 @@ class FirebaseManager {
         }
     }
     
-    func delete(date: String) {
+    func delete(id: String) {
         guard let collectionName = UserDefaults.standard.object(forKey: "userID") as? String else {
             return
         }
 
-        db.collection(collectionName).document(date).delete() { error in
+        db.collection(collectionName).document(id).delete() { error in
             if let error = error {
                 print(error)
             }
