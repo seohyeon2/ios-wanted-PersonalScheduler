@@ -11,9 +11,16 @@ import KakaoSDKUser
 import FBSDKLoginKit
 
 class ViewModel: ObservableObject {
-    @Published var isLogin = false
-    @Published var showingAlert = false
+    @Published var isLoggedIn = false
     @Published var schedule = Dummy()
+
+    func hasLoggedInHistory() -> Bool {
+        if UserDefaults.standard.object(forKey: "userID") != nil {
+            return true
+        } else {
+            return false
+        }
+    }
 
     func handleFacebookLogin() {
         LoginManager().logIn(permissions: ["public_profile", "email"], from: nil) { (loginManagerLoginResult, error) in
@@ -27,12 +34,13 @@ class ViewModel: ObservableObject {
                 return
             }
             
-            guard result.token != nil else {
+            guard let token = result.token else {
                 print("❌ User canceled or no token.")
                 return
             }
- 
-            self.isLogin = true
+
+            self.setUserDefaults(token.tokenString)
+            self.isLoggedIn = true
         }
     }
 
@@ -40,19 +48,19 @@ class ViewModel: ObservableObject {
     func handleKakaoLogin() {
         Task {
             if (UserApi.isKakaoTalkLoginAvailable()) {
-                isLogin = await handleLoginWithKakaoTalkApp()
+                isLoggedIn = await handleLoginWithKakaoTalkApp()
             } else {
-                isLogin = await handleLoginWithKakaoAccount()
+                isLoggedIn = await handleLoginWithKakaoAccount()
             }
+
+            let userID = await getKakaoUserID()
             
-            if isLogin {
-                showingAlert = false
-            } else {
-                showingAlert = true
+            if isLoggedIn && userID  != "-1" {
+                setUserDefaults(userID)
             }
         }
     }
-    
+
     func kakaoLogout() async -> Bool {
         let isLoggedOut = await Task {
             return await handleKakaoLogout()
@@ -60,7 +68,7 @@ class ViewModel: ObservableObject {
 
         return isLoggedOut
     }
-    
+
     @MainActor
     private func handleLoginWithKakaoTalkApp() async -> Bool {
         await withCheckedContinuation({ continuation in
@@ -110,5 +118,23 @@ class ViewModel: ObservableObject {
                 }
             }
         })
+    }
+    
+    private func getKakaoUserID() async -> String {
+        await withCheckedContinuation({ continuation in
+            UserApi.shared.accessTokenInfo {(accessTokenInfo, error) in
+                if let error = error {
+                    print(error)
+                    continuation.resume(returning: "-1")
+                }
+                else {
+                    continuation.resume(returning: String(accessTokenInfo?.id ?? -1))
+                }
+            }
+        })
+    }
+
+    private func setUserDefaults(_ value: Any?) {
+        UserDefaults.standard.set(value, forKey: "userID")
     }
 }

@@ -11,38 +11,42 @@ struct ContentView: View {
     @StateObject var viewModel = ViewModel()
 
     var body: some View {
-        VStack {
-            Image("logo")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 150, height: 150)
-                .clipShape(Circle())
-                .padding()
-
-            Button {
-                viewModel.handleFacebookLogin()
-            } label: {
-                Text("페이스북 로그인")
-                    .fontWeight(.bold)
-                    .foregroundColor(.white)
-                    .padding(.vertical,13)
-                    .padding(.horizontal,95)
-                    .background(Color.blue)
-                    .cornerRadius(5)
-            }
-            
-            Button {
-                viewModel.handleKakaoLogin()
-            } label: {
-                Image("kakaoLogin")
+        if viewModel.hasLoggedInHistory() {
+            SecondView()
+        } else {
+            VStack {
+                Image("logo")
                     .resizable()
-                    .frame(width: 300, height: 50)
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 150, height: 150)
+                    .clipShape(Circle())
+                    .padding()
+
+                Button {
+                    viewModel.handleFacebookLogin()
+                } label: {
+                    Text("페이스북 로그인")
+                        .fontWeight(.bold)
+                        .foregroundColor(.white)
+                        .padding(.vertical,13)
+                        .padding(.horizontal,95)
+                        .background(Color.blue)
+                        .cornerRadius(5)
+                }
+                
+                Button {
+                    viewModel.handleKakaoLogin()
+                } label: {
+                    Image("kakaoLogin")
+                        .resizable()
+                        .frame(width: 300, height: 50)
+                }
+                .fullScreenCover(isPresented: $viewModel.isLoggedIn) {
+                    SecondView()
+                }
             }
-            .fullScreenCover(isPresented: $viewModel.isLogin) {
-                SecondView()
-            }
+            .padding()
         }
-        .padding()
     }
 }
 
