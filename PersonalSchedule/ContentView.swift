@@ -11,25 +11,31 @@ struct ContentView: View {
     @StateObject var viewModel = ViewModel()
 
     var body: some View {
-//                VStack {
-//                    Button {
-//                        viewModel.handleKakaoLogin()
-//                    } label: {
-//                        Image("kakaoLogin")
-//                            .resizable()
-//                            .frame(width: 300, height: 50)
-//                    }
-//                    .alert(Text("로그인 실패😭"), isPresented: $viewModel.isLogin) {
-//                        Button("확인") { }
-//                    } message: {
-//                        Text("로그인에 실패했습니다.")
-//                    }
-//                    .fullScreenCover(isPresented: $viewModel.isLogin) {
-//                        SecondView()
-//                    }
-//                }
-//                .padding()
-        SecondView()
+        VStack {
+            Button {
+                viewModel.handleFacebookLogin()
+            } label: {
+                Text("페이스북 로그인")
+                    .fontWeight(.bold)
+                    .foregroundColor(.white)
+                    .padding(.vertical,13)
+                    .padding(.horizontal,95)
+                    .background(Color.blue)
+                    .cornerRadius(5)
+            }
+            
+            Button {
+                viewModel.handleKakaoLogin()
+            } label: {
+                Image("kakaoLogin")
+                    .resizable()
+                    .frame(width: 300, height: 50)
+            }
+            .fullScreenCover(isPresented: $viewModel.isLogin) {
+                SecondView()
+            }
+        }
+        .padding()
     }
 }
 

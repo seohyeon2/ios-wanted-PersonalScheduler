@@ -8,11 +8,33 @@
 import Foundation
 import Combine
 import KakaoSDKUser
+import FBSDKLoginKit
 
 class ViewModel: ObservableObject {
     @Published var isLogin = false
     @Published var showingAlert = false
     @Published var schedule = Dummy()
+
+    func handleFacebookLogin() {
+        LoginManager().logIn(permissions: ["public_profile", "email"], from: nil) { (loginManagerLoginResult, error) in
+            if let error = error {
+                print("❌ \(error)")
+                return
+            }
+            
+            guard let result = loginManagerLoginResult else {
+                print("❌ LogIn failed. No results.")
+                return
+            }
+            
+            guard result.token != nil else {
+                print("❌ User canceled or no token.")
+                return
+            }
+ 
+            self.isLogin = true
+        }
+    }
 
     @MainActor
     func handleKakaoLogin() {
