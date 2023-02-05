@@ -7,8 +7,7 @@
 
 import Foundation
 
-struct Schedule: Identifiable, Hashable {
-    let id = UUID()
+struct Schedule: Hashable {
     var title: String
     var date: Date
     var body: String

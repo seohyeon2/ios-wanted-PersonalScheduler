@@ -55,7 +55,7 @@ class ViewModel: ObservableObject {
 
             let userID = await getKakaoUserID()
             
-            if isLoggedIn && userID  != "-1" {
+            if isLoggedIn && userID != "-1" {
                 setUserDefaults(userID)
             }
         }
@@ -78,8 +78,6 @@ class ViewModel: ObservableObject {
                     continuation.resume(returning: false)
                 }
                 else {
-                    print("loginWithKakaoTalk() success.")
-                    _ = oauthToken
                     continuation.resume(returning: true)
                 }
             }
@@ -95,8 +93,6 @@ class ViewModel: ObservableObject {
                     continuation.resume(returning: false)
                 }
                 else {
-                    print("loginWithKakaoAccount() success.")
-                    _ = oauthToken
                     continuation.resume(returning: true)
                 }
             }
@@ -113,7 +109,6 @@ class ViewModel: ObservableObject {
                     continuation.resume(returning: false)
                 }
                 else {
-                    print("logout() success.")
                     continuation.resume(returning: true)
                 }
             }

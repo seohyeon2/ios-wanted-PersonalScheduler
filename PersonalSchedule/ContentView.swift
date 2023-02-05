@@ -71,23 +71,19 @@ struct SecondView: View {
                 }
                 .padding([.bottom], 50)
                 .overlay (
-                    Button {
-
-                    } label: {
-                        NavigationLink {
-                            DetailList(schedule: Schedule(title: "", date: Date(), body: "", emoji: ""), textManager: TextManager())
-                        } label: {
-                            ZStack {
-                                Image(systemName: "plus")
-                                    .font(.largeTitle)
-                                    .padding()
-                                    .clipShape(Circle())
-                            }
-                            .background(Color.yellow)
-                            .clipShape(Circle())
+                    NavigationLink(destination: {
+                        DetailList(schedule: Schedule(title: "", date: Date(), body: "", emoji: ""), textManager: TextManager())
+                    }, label: {
+                        ZStack {
+                            Image(systemName: "plus")
+                                .font(.largeTitle)
+                                .padding()
+                                .clipShape(Circle())
                         }
-                    }
-                        .padding([.trailing], 30)
+                        .background(Color.yellow)
+                        .clipShape(Circle())
+                    })
+                    .padding([.trailing], 30)
                     ,alignment: .bottomTrailing
                 )
             }
