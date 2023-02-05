@@ -12,6 +12,13 @@ struct ContentView: View {
 
     var body: some View {
         VStack {
+            Image("logo")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 150, height: 150)
+                .clipShape(Circle())
+                .padding()
+
             Button {
                 viewModel.handleFacebookLogin()
             } label: {
