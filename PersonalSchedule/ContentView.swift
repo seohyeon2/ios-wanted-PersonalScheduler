@@ -60,7 +60,7 @@ struct SecondView: View {
             NavigationView {
                 List {
                     ForEach(viewModel.schedules, id: \.self) { schedule in
-                        Section(header: Text(schedule.date.description)) {
+                        Section(header: Text(schedule.date.makePrettyDateForm())) {
                             NavigationLink {
                                 DetailList(schedule: schedule, textManager: TextManager(target: schedule.body))
                             } label: {

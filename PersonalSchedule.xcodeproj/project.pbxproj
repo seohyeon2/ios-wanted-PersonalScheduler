@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		05296178299069B300191150 /* IndexSet+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05296177299069B300191150 /* IndexSet+.swift */; };
+		0529617A29906B8A00191150 /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0529617929906B8A00191150 /* Date+.swift */; };
 		055001DA298FF98B00ABF26B /* FacebookCore in Frameworks */ = {isa = PBXBuildFile; productRef = 055001D9298FF98B00ABF26B /* FacebookCore */; };
 		055001DC298FF98B00ABF26B /* FacebookLogin in Frameworks */ = {isa = PBXBuildFile; productRef = 055001DB298FF98B00ABF26B /* FacebookLogin */; };
 		055001DE29902E6D00ABF26B /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 055001DD29902E6D00ABF26B /* FirebaseManager.swift */; };
@@ -27,6 +28,7 @@
 
 /* Begin PBXFileReference section */
 		05296177299069B300191150 /* IndexSet+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IndexSet+.swift"; sourceTree = "<group>"; };
+		0529617929906B8A00191150 /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
 		055001DD29902E6D00ABF26B /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		055001E42990332400ABF26B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		057BFB0F29702D0800E28E54 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -88,6 +90,7 @@
 				057BFB1329708A1F00E28E54 /* Schedule.swift */,
 				055001DD29902E6D00ABF26B /* FirebaseManager.swift */,
 				05296177299069B300191150 /* IndexSet+.swift */,
+				0529617929906B8A00191150 /* Date+.swift */,
 			);
 			path = PersonalSchedule;
 			sourceTree = "<group>";
@@ -188,6 +191,7 @@
 				05D849CA29702A9300B9F6D7 /* ContentView.swift in Sources */,
 				057BFB12297035B900E28E54 /* ViewModel.swift in Sources */,
 				057BFB1429708A1F00E28E54 /* Schedule.swift in Sources */,
+				0529617A29906B8A00191150 /* Date+.swift in Sources */,
 				05296178299069B300191150 /* IndexSet+.swift in Sources */,
 				05D849C829702A9300B9F6D7 /* PersonalScheduleApp.swift in Sources */,
 				055001DE29902E6D00ABF26B /* FirebaseManager.swift in Sources */,
