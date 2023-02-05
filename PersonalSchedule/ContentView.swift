@@ -59,7 +59,7 @@ struct SecondView: View {
                 .font(.largeTitle)
             NavigationView {
                 List {
-                    ForEach(viewModel.schedule.dummy, id: \.self) { schedule in
+                    ForEach(viewModel.schedules, id: \.self) { schedule in
                         Section(header: Text(schedule.date.description)) {
                             NavigationLink {
                                 DetailList(schedule: schedule, textManager: TextManager(target: schedule.body))
@@ -68,6 +68,9 @@ struct SecondView: View {
                             }
                         }
                     }
+                }
+                .onAppear {
+                    viewModel.setSchedules()
                 }
                 .padding([.bottom], 50)
                 .overlay (
@@ -113,6 +116,8 @@ struct ScheduleList: View {
 struct DetailList: View {
     @State var schedule: Schedule
     @StateObject var textManager: TextManager
+    @StateObject var viewModel = ViewModel()
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     var body: some View {
         VStack {
@@ -158,7 +163,9 @@ struct DetailList: View {
             HStack() {
                 Section {
                     Button {
-                        // TODO: 내용 저장
+                        schedule.body = textManager.target
+                        viewModel.add(schedule: schedule)
+                        self.presentationMode.wrappedValue.dismiss()
                     } label: {
                         Text("저장하기")
                     }

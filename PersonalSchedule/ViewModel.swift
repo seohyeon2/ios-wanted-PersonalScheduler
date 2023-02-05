@@ -13,7 +13,28 @@ import FBSDKLoginKit
 class ViewModel: ObservableObject {
     @Published var isLoggedIn = false
     @Published var schedule = Dummy()
-
+    @Published var schedules = [Schedule]()
+    
+    func setSchedules() {
+        schedules = [Schedule]()
+        FirebaseManager.shared.fetch { data in
+            data.forEach { schedule in
+                let mappingSchedule = Schedule(
+                    id: schedule["id"] as? String ?? UUID().description,
+                    title: schedule["title"] as? String ?? "",
+                    date: schedule["date"] as? Date ?? Date(),
+                    body: schedule["body"] as? String ?? "",
+                    emoji: schedule["emoji"] as? String ?? ""
+                )
+                self.schedules.append(mappingSchedule)
+            }
+        }
+    }
+    
+    func add(schedule: Schedule) {
+        FirebaseManager.shared.save(schedule)
+    }
+    
     func hasLoggedInHistory() -> Bool {
         if UserDefaults.standard.object(forKey: "userID") != nil {
             return true

@@ -11,7 +11,6 @@ import FirebaseFirestore
 class FirebaseManager {
     static let shared =  FirebaseManager()
     private let db = Firestore.firestore()
-    private(set) var schedules = [[String : Any]]()
 
     private init() {}
     
@@ -24,11 +23,11 @@ class FirebaseManager {
                 print(error)
             } else {
                 if let data = querySnapshot {
-                    self.schedules = [[String : Any]]()
+                    var schedules = [[String : Any]]()
                     for document in data.documents {
-                        self.schedules.append(document.data())
+                        schedules.append(document.data())
                     }
-                    handler(self.schedules)
+                    handler(schedules)
                 }
             }
         }
@@ -39,7 +38,8 @@ class FirebaseManager {
             return
         }
 
-        db.collection(collectionName).document(model.date.description).setData([
+        db.collection(collectionName).document(model.id).setData([
+            "id": model.id,
             "date": model.date.description,
             "title": model.title,
             "body": model.body,
